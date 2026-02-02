@@ -30,5 +30,9 @@ def f(player):
     conn.close()
     return records[0][0]
 
-iface = gr.Interface(fn=f,inputs=gr.Dropdown(choices=fetch_phillies()),outputs="number")
+with gr.Blocks() as iface:
+    choices = gr.Dropdown(choices=fetch_phillies(),interactive=True)
+    hrs = gr.Number()
+    choices.change(fn=f,inputs=[choices],outputs=hrs)
+
 iface.launch()
