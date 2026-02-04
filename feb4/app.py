@@ -1,11 +1,22 @@
 import sqlite3
 import pandas as pd
+import gradio as gr
 
 conn = sqlite3.connect('../baseball.db')
 cursor = conn.cursor()
 
-df = pd.read_csv('../teams.csv')
-df.to_sql('teams',conn,if_exists='replace',index=False)
+query = """
+    SELECT yearID,sum(HR) as totalHR
+    FROM batting
+    WHERE teamID = 'PHI'
+    GROUP BY yearID
+    ORDER BY yearID desc
+"""
 
-conn.commit()
+cursor.execute(query)
+records = cursor.fetchall()
 conn.close()
+
+records_df = pd.DataFrame(records,columns=['yearID','totalHR'])
+
+print(records_df)
