@@ -43,7 +43,10 @@ def f(player):
 
 with gr.Blocks() as iface:
     choices = gr.Dropdown(choices=playernames(),interactive=True)
-    hrs = gr.LinePlot()
+    hrs = gr.LinePlot(value=f,
+        x="yearID",
+        y="HR",
+        tooltip=["yearID", "HR"],)
     choices.change(fn=f,inputs=[choices],outputs=hrs)
 
 iface.launch()
