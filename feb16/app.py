@@ -26,8 +26,24 @@ def playernames():
         fullname = names.append(record[0])
     return names
 
+def f(player):
+    conn = sqlite3.connect('../baseball.db')
+    cursor = conn.cursor()
+    query = """
+    SELECT yearID,HR
+    FROM batting
+    WHERE playerID = ?
+    """
+    cursor.execute(query,[player])
+    records = cursor.fetchall()
+    df = pd.DataFrame(records,columns=['yearID','HR'])
+    conn.close()
+    return df
+
+
 with gr.Blocks() as iface:
     choices = gr.Dropdown(choices=playernames(),interactive=True)
-    names = gr.Dataframe()
+    hrs = gr.LinePlot()
+    choices.change(fn=f,inputs=[choices],outputs=hrs)
 
 iface.launch()
