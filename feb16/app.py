@@ -27,7 +27,7 @@ def f(player):
     conn = sqlite3.connect('../baseball.db')
     cursor = conn.cursor()
     query = """
-    SELECT yearID,HR
+    SELECT CAST(yearID AS text),HR
     FROM batting
     WHERE playerID = ?
     """
