@@ -29,7 +29,7 @@ def f(player):
     query = """
     SELECT CAST(yearID AS text),HR
     FROM batting
-    WHERE playerID = ?
+    WHERE teamID = 'PHI' AND playerID = ?
     """
     cursor.execute(query,[player])
     records = cursor.fetchall()
@@ -40,10 +40,10 @@ def f(player):
 
 with gr.Blocks() as iface:
     choices = gr.Dropdown(choices=playernames(),interactive=True)
-    hrs = gr.LinePlot(
+    plot = gr.LinePlot(
         x="yearID",
         y="HR",
         tooltip=['yearID', 'HR'],)
-    choices.change(fn=f,inputs=[choices],outputs=hrs)
+    choices.change(fn=f,inputs=[choices],outputs=plot)
 
 iface.launch()
