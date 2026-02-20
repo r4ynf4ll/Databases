@@ -7,5 +7,7 @@ class Champion(SQLModel, table=True)
     roles: str
     resource: str
 
+engine = create_engine("sqlite:///league.db")
 
+SQLModel.metadata.create_all(engine)
 
