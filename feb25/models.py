@@ -12,7 +12,7 @@ class Player(SQLModel, table=True):
 	Last_Name: str
 
 class Stats(SQLModel, table=True):
-	Number: int = Field(primary_key=True)
+	Number: int = Field(primary_key=True, foreign_key="player.Number")
 	First_Name: str
 	Last_Name: str | None = None
 	GP: int
