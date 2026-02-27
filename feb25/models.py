@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, create_engine
 
 class Player(SQLModel, table=True):
 	Position: str
@@ -35,3 +35,7 @@ class Stats(SQLModel, table=True):
 	MAJ: int
 	OTH: int
 	BLK: int
+
+engine = create_engine('sqlite:///hockey.db')
+SQLModel.metadata.create_all(engine)
+
